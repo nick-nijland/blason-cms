@@ -2,16 +2,14 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { Faq } from './faq.interface';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class FaqService {
 
   private dbPath = '/faq';
-
   faq: Faq;
-
-
   faqRef: AngularFireList<Faq>;
 
   constructor(private db: AngularFireDatabase) {

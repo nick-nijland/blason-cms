@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { ProductsService } from './products.service';
 import { map } from 'rxjs/operators';
+import { Product } from './product.interface';
 
 @Component({
   selector: 'products',
@@ -12,13 +14,16 @@ import { map } from 'rxjs/operators';
 export class ProductsComponent implements OnInit {
 
   productForm: FormGroup;
+  modalRef?: BsModalRef;
   editMode: boolean = false;
   loading: boolean = true;
+  currentProduct: Product;
   products: any;
   content: any;
 
   constructor(
     private productService: ProductsService,
+    private modalService: BsModalService,
     private formBuilder: FormBuilder,
     private db: AngularFireDatabase) {
   }
@@ -37,6 +42,7 @@ export class ProductsComponent implements OnInit {
     this.productService.create(this.productForm.value).then(() => {
       this.productForm.reset();
     });
+    this.closeModal();
   }
 
   fetchItems() {
@@ -58,6 +64,31 @@ export class ProductsComponent implements OnInit {
         console.log('asijdasij');
       })
       .catch(err => console.log(err));
+  }
+
+  openModal(template: TemplateRef<any>, type: string, item?: any) {
+
+    if (type === 'add') {
+      this.productForm.reset();
+    }
+
+    if (type === 'edit') {
+      this.editMode = true;
+      this.currentProduct = item;
+      this.productForm.patchValue({
+        title: item.title,
+        price: item.price,
+        content: item.content,
+        visible: item.visible
+      });
+    }
+
+    this.modalRef = this.modalService.show(template);
+  }
+
+  closeModal() {
+    this.modalRef?.hide();
+    this.productForm.reset();
   }
 
 }

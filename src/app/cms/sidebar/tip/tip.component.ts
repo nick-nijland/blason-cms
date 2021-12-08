@@ -15,7 +15,7 @@ export class TipComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.item);
+
   }
 
 }

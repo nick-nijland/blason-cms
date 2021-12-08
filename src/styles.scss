@@ -6,6 +6,7 @@
 
 $primaryColor: #2F184C;
 $navbarColor: #2F184C;
+$secondaryColor: #FA9580;
 $succes: #68D391;
 $inactive: #DE5954;
 $mainColor: #F6F7FB;
@@ -111,7 +112,20 @@ h1,h2,h3,h4 {
             &:hover,
             &.active {
                 opacity: 1;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    bottom: -16px;
+                    height: 4px;
+                    width: 100%;
+                    display: block;
+                    background: $secondaryColor;
+                }
             }
+        }
+        .nav-item {
+            position: relative;
         }
     }
     svg {

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { map } from 'rxjs/operators';
+import { ContentService } from './content.service';
+import { Content } from './content.interface';
 
 @Component({
   selector: 'content',
@@ -15,6 +17,7 @@ export class ContentComponent implements OnInit {
   content: any;
 
   constructor(
+    private contentService: ContentService,
     private formBuilder: FormBuilder,
     private db: AngularFireDatabase) {
   }
@@ -27,7 +30,10 @@ export class ContentComponent implements OnInit {
   }
 
   createItem() {
-    console.log('add');
+    this.contentService.create(this.contentForm.value)
+      .then(() => {
+        console.log('add');
+      });
   }
 
 }
