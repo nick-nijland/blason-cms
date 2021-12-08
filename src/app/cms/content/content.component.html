@@ -1,0 +1,31 @@
+<mat-spinner *ngIf="loading"></mat-spinner>
+
+<!-- <div class="row" *ngIf="!loading">
+  <div *ngFor="let item of (content) let i = index;" class="col-6 col-lg-4">
+    <div class="card mb-5">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.title }}</h5>
+          <p class="card-text">{{ item.content }}</p>
+          <a class="btn btn-outline-primary mr-2">Bewerk</a>
+        </div>
+    </div>
+  </div>
+</div> -->
+
+<form [formGroup]="contentForm" (submit)="createItem()" *ngIf="!loading">
+
+  <mat-form-field class="example-full-width" appearance="fill" class="d-block">
+    <mat-label>Titel</mat-label>
+    <input matInput formControlName="title">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill" class="d-block">
+    <mat-label>Content</mat-label>
+    <input matInput formControlName="content">
+  </mat-form-field>
+
+  <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">
+      <span>Bewerk</span>
+  </button>
+
+</form>

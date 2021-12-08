@@ -1,1 +1,166 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/scss/bootstrap";
+@import "~ngx-bootstrap/datepicker/bs-datepicker";
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+
+@import "./scss/checkmark-animation.scss";
+
+$primaryColor: #2F184C;
+$navbarColor: #2F184C;
+$succes: #68D391;
+$inactive: #DE5954;
+$mainColor: #F6F7FB;
+
+$navbarIconSize: 22px;
+$space: 1.5em;
+$loginHeight: 480px;
+
+$cardShadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+
+h1,h2,h3,h4 {
+    font-family: 'Nunito', sans-serif;
+}
+
+.btn-primary:disabled,
+.btn-primary {
+    background: $primaryColor;
+    border: 1px solid $primaryColor;
+}
+
+.btn-outline-primary {
+    color: $primaryColor;
+    border-color: $primaryColor;
+    &:hover {
+        border-color: $primaryColor;
+        background: $primaryColor;
+    }
+    &.white-outline {
+        color: white;
+        border-color: white;
+        &:hover {
+            color: $primaryColor;
+            background: white;
+        }
+    }
+}
+
+.navbar-toggler {
+    .mat-icon {
+        color: white;
+    }
+}
+
+.menu {
+    &--menu {
+        display: block !important;
+    }
+}
+
+.btn-primary:disabled {
+    opacity: .4;
+}
+
+// spinners
+.mat-spinner {
+    margin: 0 auto;
+}
+
+.login .mat-progress-spinner circle, 
+.login .mat-spinner circle {
+    stroke: white;
+}
+
+.login .mat-progress-spinner,
+.login .mat-progress-spinner svg {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.login .mat-progress-spinner circle, 
+.login .mat-spinner circle {
+    stroke: $primaryColor;
+}
+
+.mat-fab.mat-primary {
+    background: $primaryColor;
+}
+
+.login {
+    background: $mainColor;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    .mat-form-field {
+        width: 100%;
+    }
+    .card {
+        margin: 0 auto;
+        height: $loginHeight;
+    }
+}
+
+.navbar {
+    background: $navbarColor;
+    padding: 1rem 1.5rem;
+    a {
+        opacity: .5;
+        color: white;
+    }
+    .navbar-nav {
+        a {
+            opacity: .5;
+            &:hover,
+            &.active {
+                opacity: 1;
+            }
+        }
+    }
+    svg {
+        width: $navbarIconSize;
+        height: $navbarIconSize;
+        color: white;
+    }
+}
+
+main {
+    background: $mainColor;
+}
+
+.card {
+    border: none;
+    box-shadow: $cardShadow;
+}
+
+.faq-table {
+    td {
+        // display: table;
+        // align-items: center;
+    }
+    th:last-child { 
+        width: 25%;
+    }
+    &__circle {
+        border-radius: 50%;
+        margin-right: $space/4;
+        height: $space/3;
+        width: $space/3;
+        background: $inactive;
+    }
+    &--online {
+        background: $succes;
+    }
+}
+
+.add-button {
+    position: fixed;
+    bottom: $space*2;
+    right: $space*2;
+    z-index: 1;
+}
+
+.tip {
+    background: #EEEEF7;
+    
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

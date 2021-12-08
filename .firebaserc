@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "blason-7f979": {
+      "hosting": {
+        "blason-cms": [
+          "blason-7f979"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "blason-7f979"
+  }
+}

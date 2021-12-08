@@ -1,0 +1,137 @@
+<div class="login d-flex justify-content-center align-items-center">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-12 offset-0 col-lg-6 offset-lg-3">
+                <div 
+                    class="card p-5 mb-5 d-flex justify-content-center" 
+                    id="loginForm">
+
+                    <div *ngIf="loggedIn" class="wrapper"> 
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                        </svg>
+                    </div>
+
+                    <form 
+                        *ngIf="!loading && !resetPassword  && !loggedIn" 
+                        [formGroup]="loginForm" 
+                        (submit)="submit()">
+
+                        <div 
+                            *ngIf="showError" 
+                            class="alert alert-danger" 
+                            role="alert">
+                            {{ login.errorMessage }}
+                        </div>  
+
+                        <h2>{{ login.title }}</h2>
+                        <p>{{ login.subtitle }}</p>
+
+                        <mat-form-field 
+                            class="full-width" 
+                            appearance="fill">
+                            <mat-label>{{ login.email }}</mat-label>
+                            <input 
+                                type="email" 
+                                matInput 
+                                formControlName="email">
+                            <mat-error 
+                                *ngIf="loginForm.controls.email.errors">
+                                {{ login.required }}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field 
+                            class="full-width mt-2" 
+                            appearance="fill">
+                            <mat-label>{{ login.password }}</mat-label>
+                            <input 
+                                type="password" 
+                                matInput 
+                                formControlName="password">
+                            <mat-error 
+                                *ngIf="loginForm.controls.password.errors">
+                                {{ login.required }}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <button 
+                            [disabled]="loginForm.invalid" 
+                            type="submit" 
+                            class="btn btn-primary btn-lg w-100 mt-3">
+                            <mat-spinner 
+                                *ngIf="loading">
+                            </mat-spinner>
+                            <span 
+                                *ngIf="!loading">
+                                {{ login.title }}
+                            </span>
+                        </button>
+                        <a 
+                            (click)="forgotPassword()"
+                            title="Wachtwoord vergeten?" 
+                            class="w-100 text-center pt-3 d-block">
+                            {{ login.forgotPassword }}
+                        </a>
+
+                    </form>
+
+                    <form 
+                        *ngIf="!loading && resetPassword && !loggedIn" 
+                        [formGroup]="resetPasswordForm" 
+                        (submit)="sendResetPassword()">
+
+                        <div 
+                            *ngIf="showError" 
+                            class="alert alert-danger" 
+                            role="alert">
+                            {{ login.errorMessage }}
+                        </div>  
+
+                        <h2>{{ login.forgotPassword }}</h2>
+                        <p>{{ login.forgotPasswordSubtitle }}</p>
+
+                        <mat-form-field 
+                            class="full-width" 
+                            appearance="fill">
+                            <mat-label>{{ login.email }}</mat-label>
+                            <input 
+                                type="email" 
+                                matInput 
+                                formControlName="email">
+                            <mat-error 
+                                *ngIf="resetPasswordForm.controls.email.errors">
+                                {{ login.required }}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <button 
+                            [disabled]="resetPasswordForm.invalid" 
+                            type="submit" 
+                            class="btn btn-primary btn-lg w-100 mt-3">
+                            <mat-spinner 
+                                *ngIf="loading">
+                            </mat-spinner>
+                            <span 
+                                *ngIf="!loading">
+                                {{ login.send }}
+                            </span>
+                        </button>
+                        <a 
+                            (click)="forgotPassword()" 
+                            title="{{ login.forgotPassword }}" 
+                            class="w-100 text-center pt-3 d-block">
+                            {{ login.cancel }}
+                        </a>
+
+                      </form>
+                    
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

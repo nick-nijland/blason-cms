@@ -1,0 +1,78 @@
+<div class="card p-5 table-responsive">
+    <table class="table m-0 faq-table">
+
+        <thead>
+            <tr>
+                <th scope="col">{{ content.table.question }}</th>
+                <th scope="col">{{ content.table.answer }}</th>
+                <th scope="col">{{ content.table.visible }}</th>
+                <th scope="col">{{ content.table.actions }}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let item of (faqItems) let i = index;">
+                <td>{{ item.title | truncate:[20] }}</td>
+                <td>{{ item.content | truncate:[20] }}</td>
+                <td>
+                  <div [ngClass]="item.visible === false ? 'faq-table__circle mt-1' : 'faq-table__circle faq-table--online mt-1'"></div>
+                </td>
+                <td>
+                  <button 
+                    type="button" 
+                    class="btn btn-outline-primary mr-2" 
+                    (click)="openModal(modalTemplate, 'edit', item)">
+                    {{ content.table.edit }}
+                  </button>
+                  <button 
+                    type="button" 
+                    class="btn btn-outline-primary" 
+                    (click)="deleteFaq(item)">
+                    {{ content.table.delete }}
+                  </button>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+
+<div class="add-button">
+  <button 
+    mat-fab 
+    color="primary"
+    (click)="openModal(modalTemplate, 'add')">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<ng-template #modalTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{ editMode ? content.table.edit : content.table.add }}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editForm" (submit)="createFaq()">
+
+      <mat-form-field class="example-full-width" appearance="fill" class="d-block">
+        <mat-label>{{ content.table.question }}</mat-label>
+        <input matInput formControlName="title" value="Sushi">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill" class="d-block">
+        <mat-label>{{ content.table.answer }}</mat-label>
+        <textarea matInput formControlName="content"></textarea>
+      </mat-form-field>
+
+      <p><mat-checkbox formControlName="visible">{{ content.table.visible }}</mat-checkbox></p>
+
+      <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">
+          <span>{{ editMode ? content.table.edit : content.table.add }}</span>
+      </button>
+
+  </form>
+  </div>
+</ng-template>
+
