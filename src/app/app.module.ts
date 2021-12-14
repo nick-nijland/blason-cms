@@ -38,6 +38,8 @@ import { provideMessaging, getMessaging } from '@angular/fire/messaging';
 import { providePerformance, getPerformance } from '@angular/fire/performance';
 import { provideRemoteConfig, getRemoteConfig } from '@angular/fire/remote-config';
 import { provideStorage, getStorage } from '@angular/fire/storage';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 // pipes
 import { TruncatePipe } from './pipes/truncate.pipe';
@@ -79,7 +81,8 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     ModalModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
   ],
   providers: [
     ScreenTrackingService, UserTrackingService

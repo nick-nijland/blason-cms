@@ -5,6 +5,8 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { ProductsService } from './products.service';
 import { map } from 'rxjs/operators';
 import { Product } from './product.interface';
+import { FileUploadService } from './file-upload.service';
+import { FileUpload } from './file-upload.interface';
 
 @Component({
   selector: 'products',
@@ -12,7 +14,8 @@ import { Product } from './product.interface';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-
+  selectedFiles: any;
+  currentFileUpload: FileUpload;
   productForm: FormGroup;
   modalRef?: BsModalRef;
   editMode: boolean = false;
@@ -25,6 +28,7 @@ export class ProductsComponent implements OnInit {
     private productService: ProductsService,
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
+    private uploadService: FileUploadService,
     private db: AngularFireDatabase) {
   }
 
@@ -42,6 +46,7 @@ export class ProductsComponent implements OnInit {
     this.productService.create(this.productForm.value).then(() => {
       this.productForm.reset();
     });
+    this.upload();
     this.closeModal();
   }
 
@@ -90,6 +95,27 @@ export class ProductsComponent implements OnInit {
   closeModal() {
     this.modalRef?.hide();
     this.productForm.reset();
+  }
+
+  selectFile(event: any): void {
+    this.selectedFiles = event.target.files;
+    console.log(this.selectedFiles[0].name);
+  }
+
+  upload(): void {
+    const file = this.selectedFiles.item(0);
+    this.selectedFiles = undefined;
+
+    this.currentFileUpload = new FileUpload(file);
+    this.uploadService.pushFileToStorage(this.currentFileUpload).subscribe(
+      percentage => {
+        // to do implement progress bar
+        console.log(percentage);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   text = {

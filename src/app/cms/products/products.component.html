@@ -64,6 +64,12 @@
   <div class="modal-body">
     <form [formGroup]="productForm" (submit)="createProduct()" *ngIf="!loading">
 
+      <input
+        type="file"
+        class="text-nowrap text-truncate"
+        (change)="selectFile($event)"
+      />
+
       <mat-form-field class="example-full-width" appearance="fill" class="d-block">
         <mat-label>{{ text.title }}</mat-label>
         <input matInput formControlName="title" value="Sushi">
