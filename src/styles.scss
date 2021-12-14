@@ -133,6 +133,14 @@ h1,h2,h3,h4 {
         height: $navbarIconSize;
         color: white;
     }
+
+    @media only screen and (max-width: 992px) {
+        .navbar-nav a:hover:after, 
+        .navbar-nav a.active:after {
+            display: none;
+        }        
+    }
+ 
 }
 
 main {
@@ -164,6 +172,24 @@ main {
     }
 }
 
+// products
+.products {
+    .link {
+        font-weight: bold;
+        cursor: pointer;
+        color: $primaryColor;
+    }
+    .card {
+        img {
+            cursor: pointer;
+            transition: .3s;
+            &:hover {
+                opacity: .5;
+            }
+        }
+    }
+}
+
 .add-button {
     position: fixed;
     bottom: $space*2;
@@ -173,7 +199,6 @@ main {
 
 .tip {
     background: #EEEEF7;
-    
 }
 
 html, body { height: 100%; }

@@ -61,10 +61,8 @@ export class FaqComponent implements OnInit {
 
     this.faqService.create(this.editForm.value)
       .then(() => {
-        //console.log(this.editForm.value);
         console.log('Created new item successfully!');
         this.closeModal();
-        //this.submitted = true;
       });
   }
 
@@ -72,8 +70,6 @@ export class FaqComponent implements OnInit {
   deleteFaq(item: any) {
     this.faqService.delete(item.key)
       .then(() => {
-        // this.refreshList.emit();
-        // this.message = 'The tutorial was updated successfully!';
         console.log('asijdasij');
       })
       .catch(err => console.log(err));
@@ -87,41 +83,14 @@ export class FaqComponent implements OnInit {
     };
 
     this.faqService.update(this.currentFaq.key, data)
-      .then(() => this.message = 'The tutorial was updated successfully!')
+      .then(() => this.message = 'Updated')
       .catch(err => console.log(err));
   }
-
-  // updateFaq() {
-  //   const data = {
-  //     title: this.currentTutorial.title,
-  //     description: this.currentTutorial.description
-  //   };
-
-  //   this.tutorialService.update(this.currentTutorial.key, data)
-  //     .then(() => this.message = 'The tutorial was updated successfully!')
-  //     .catch(err => console.log(err));
-  // }
-
-  // addItem() {
-  //   const tutorialsRef = this.db.list('tutorials');
-  //   tutorialsRef.update('key', { title: 'zkoder new Tut#1' });
-  // }
-
-  // saveFaq(item: Faq) {
-  //   console.log(item);
-  //   //prviate db.list('/users').push(this.model);
-  //   //db.list('faq').add
-
-  // }
-
-
-  // deleteFaq(item: Faq) {
-  //   console.log(item);
-  // }
 
   openModal(template: TemplateRef<any>, type: string, item?: any) {
 
     if (type === 'add') {
+      this.editMode = false;
       this.editForm.reset();
     }
 
@@ -138,7 +107,6 @@ export class FaqComponent implements OnInit {
   }
 
   closeModal() {
-    console.log('reset');
     this.modalRef?.hide();
     this.editForm.reset();
   }

@@ -69,6 +69,7 @@ export class ProductsComponent implements OnInit {
   openModal(template: TemplateRef<any>, type: string, item?: any) {
 
     if (type === 'add') {
+      this.editMode = false;
       this.productForm.reset();
     }
 
@@ -90,5 +91,18 @@ export class ProductsComponent implements OnInit {
     this.modalRef?.hide();
     this.productForm.reset();
   }
+
+  text = {
+    noProducts: "Nog geen producten",
+    addProduct: "Eentje toevoegen?",
+    edit: "Bewerk",
+    delete: "Verwijder",
+    createProduct: "Product toevoegen",
+    updateProduct: "Product bewerken",
+    title: "Titel",
+    price: "Prijs",
+    description: "Beschrijving",
+    visible: "Zichtbaar"
+  };
 
 }

@@ -11,6 +11,7 @@ export class NavbarComponent implements OnInit {
 
   currentRoute: string;
   activeMenu: boolean = false;
+  contentDisabled: boolean = true;
 
   constructor(
     private auth: AngularFireAuth,

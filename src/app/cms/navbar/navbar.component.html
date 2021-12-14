@@ -9,13 +9,19 @@
 	<div class="collapse navbar-collapse pt-2" id="navbarNav" [ngClass]="this.activeMenu ? 'show' : ''">
 	  <ul class="navbar-nav">
 		<li class="nav-item active">
-		  <a class="nav-link" routerLinkActive="active" routerLink="producten">Producten <span class="sr-only">(current)</span></a>
+		  <a 
+		  	class="nav-link" 
+			routerLinkActive="active" 
+			routerLink="producten">
+			Producten 
+			<span class="sr-only">(current)</span>
+		</a>
 		</li>
 		<li class="nav-item">
 		  <a class="nav-link" routerLinkActive="active" routerLink="veelgestelde-vragen">Veelgestelde vragen</a>
 		</li>
 		<li class="nav-item">
-		  <a class="nav-link" routerLinkActive="active" routerLink="content">Content</a>
+		  <a [ngClass]="this.contentDisabled ? 'nav-link disabled' : 'nav-link'" routerLinkActive="active" routerLink="content">Content</a>
 		</li>
 	</ul>
 	</div>

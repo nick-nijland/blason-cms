@@ -1,28 +1,44 @@
 <mat-spinner *ngIf="loading"></mat-spinner>
 
-<div class="row" *ngIf="!loading">
-  <div *ngIf="products.length === 0">
-    Geen producten
+<div *ngIf="!loading" class="products row">
+
+  <div *ngIf="products.length === 0" class="p-5 col-12 text-center">
+
+    <h2>😐</h2>
+    <p>{{ text.noProducts }} 
+      <a (click)="openModal(modalTemplate, 'add')" class="link">
+        {{ text.addProduct }}
+      </a>
+    </p>
   </div>
+
   <div *ngFor="let item of (products) let i = index;" class="col-6 col-lg-4">
     <div class="card mb-5">
-        <img class="card-img-top" src="https://dezoeteverleiding.info/wp-content/uploads/2014/05/DSC_0744.jpg" alt="Card image cap">
+        <img 
+          (click)="openModal(modalTemplate, 'edit', item)"
+          class="card-img-top" 
+          src="https://dezoeteverleiding.info/wp-content/uploads/2014/05/DSC_0744.jpg" 
+          alt="{{ item.title }}"
+        />
         <div class="card-body">
           <h5 class="card-title">{{ item.title }}</h5>
-          <span [ngClass]="item.visible === false ? 'badge badge-pill badge-danger' : 'badge badge-pill badge-success'">Online</span>
+          <span 
+            [ngClass]="item.visible !== true ? 'badge badge-pill badge-danger' : 'badge badge-pill badge-success'">
+            {{ item.visible ? 'Online' : 'Offline' }}
+          </span>
           <p class="card-text">{{ item.price }}</p>
           <p class="card-text">{{ item.content }}</p>
           <button 
           type="button" 
           class="btn btn-outline-primary mr-2" 
           (click)="openModal(modalTemplate, 'edit', item)">
-          Bewerk
+          {{ text.edit }}
         </button>
         <button 
           type="button" 
           class="btn btn-outline-primary" 
           (click)="deleteProduct(item)">
-          Verwijder
+          {{ text.delete }}
         </button>
         </div>
     </div>
@@ -40,7 +56,7 @@
 
 <ng-template #modalTemplate>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Product aanmaken</h4>
+    <h4 class="modal-title pull-left">{{ editMode ? text.updateProduct : text.createProduct }}</h4>
     <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
@@ -49,21 +65,21 @@
     <form [formGroup]="productForm" (submit)="createProduct()" *ngIf="!loading">
 
       <mat-form-field class="example-full-width" appearance="fill" class="d-block">
-        <mat-label>Titel</mat-label>
+        <mat-label>{{ text.title }}</mat-label>
         <input matInput formControlName="title" value="Sushi">
       </mat-form-field>
     
       <mat-form-field class="example-full-width" appearance="fill" class="d-block">
-        <mat-label>Prijs</mat-label>
+        <mat-label>{{ text.price }}</mat-label>
         <input type="number" matInput formControlName="price" value="Sushi">
       </mat-form-field>
     
       <mat-form-field class="example-full-width" appearance="fill" class="d-block">
-        <mat-label>Leave a comment</mat-label>
+        <mat-label>{{ text.description }}</mat-label>
         <textarea matInput formControlName="content"></textarea>
       </mat-form-field>
     
-      <p><mat-checkbox formControlName="visible">Zichtbaar</mat-checkbox></p>
+      <p><mat-checkbox formControlName="visible">{{ text.visible }}</mat-checkbox></p>
     
       <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">
           <span>{{ editMode ? 'Bewerk' : 'Voeg toe' }}</span>
