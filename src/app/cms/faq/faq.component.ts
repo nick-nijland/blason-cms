@@ -5,22 +5,31 @@ import { Observable } from 'rxjs';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FaqService } from './faq.service';
 import { Faq } from './faq.interface';
+import { Message } from './message.interface';
 import { map } from 'rxjs/operators';
+import { bounceInUpOnEnterAnimation, bounceOutDownOnLeaveAnimation, } from 'angular-animations';
 
 @Component({
   selector: 'faq',
   templateUrl: './faq.component.html',
-  styleUrls: ['./faq.component.scss']
+  styleUrls: ['./faq.component.scss'],
+  animations: [
+    bounceInUpOnEnterAnimation(),
+    bounceOutDownOnLeaveAnimation()
+  ]
 })
 export class FaqComponent implements OnInit {
 
   faq: Faq;
+  message: Message;
   modalRef?: BsModalRef;
   editForm: FormGroup;
   editMode: boolean = false;
   faqItems: any;
   currentFaq: Faq;
-  message: string = 'null';
+  isOpen: boolean = true;
+  loading: boolean = true;
+  showMessage: boolean = false;
 
   constructor(
     private faqService: FaqService,
@@ -34,7 +43,7 @@ export class FaqComponent implements OnInit {
     this.editForm = this.formBuilder.group({
       title: [null, [Validators.required]],
       content: [null, Validators.required],
-      visible: [null, Validators.required],
+      visible: [null],
     });
   };
 
@@ -47,7 +56,7 @@ export class FaqComponent implements OnInit {
       )
     ).subscribe(data => {
       this.faqItems = data;
-      //console.log(this.faqItems);
+      this.loading = false;
     });
   }
 
@@ -61,31 +70,34 @@ export class FaqComponent implements OnInit {
 
     this.faqService.create(this.editForm.value)
       .then(() => {
-        console.log('Created new item successfully!');
+        this.handleMessage('create');
         this.closeModal();
       });
   }
 
-
   deleteFaq(item: any) {
     this.faqService.delete(item.key)
       .then(() => {
-        console.log('asijdasij');
+        this.handleMessage('delete');
       })
       .catch(err => console.log(err));
   }
 
   updateFaq(): void {
+
     const data = {
-      title: this.currentFaq.title,
-      content: this.currentFaq.content,
-      visible: this.currentFaq.visible
+      title: this.editForm.value.title,
+      content: this.editForm.value.content,
+      visible: this.editForm.value.visible
     };
 
     this.faqService.update(this.currentFaq.key, data)
-      .then(() => this.message = 'Updated')
+      .then(() => {
+        this.handleMessage('update');
+      })
       .catch(err => console.log(err));
   }
+
 
   openModal(template: TemplateRef<any>, type: string, item?: any) {
 
@@ -111,7 +123,42 @@ export class FaqComponent implements OnInit {
     this.editForm.reset();
   }
 
+  handleMessage(type: string) {
+    this.showMessage = true;
+    switch (type) {
+      case 'create':
+        this.message = this.content.itemCreated;
+        break;
+      case 'delete':
+        this.message = this.content.itemDeleted;
+        break;
+      default:
+        this.message = this.content.itemUpdated;
+    }
+    setTimeout(() => {
+      this.showMessage = false;
+    }, 1500);
+  }
+
+  hideMessage() {
+    console.log('2000');
+    this.showMessage = false;
+    console.log(this.showMessage);
+  }
+
   content = {
+    itemCreated: {
+      text: "Item aangemaakt!",
+      icon: "✅"
+    },
+    itemDeleted: {
+      text: "Item verwijderd",
+      icon: "🗑️"
+    },
+    itemUpdated: {
+      text: "Item aangepast!",
+      icon: "🙌"
+    },
     table: {
       question: "Vraag",
       answer: "Antwoord",
@@ -119,7 +166,9 @@ export class FaqComponent implements OnInit {
       actions: "Acties",
       edit: "Bewerk",
       delete: "Verwijder",
-      add: "Voeg toe"
+      add: "Voeg toe",
+      noItems: "Nog geen items",
+      addItem: "Eentje toevoegen?"
     }
   };
 

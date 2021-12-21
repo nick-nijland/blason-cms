@@ -2,10 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
+  animations: [
+    trigger('loadAnimation', [
+      state('open', style({
+        marginTop: '0',
+        opacity: '1'
+      })),
+      state('closed', style({
+        marginTop: '-100px',
+        opacity: '0'
+      })),
+      transition('closed => open', [animate('.3s ease-in-out')]),
+    ]),
+  ],
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
@@ -16,6 +30,8 @@ export class LoginComponent implements OnInit {
   showError: boolean = false;
   loggedIn: boolean = false;
   resetPassword: boolean = false;
+  isLoaded: boolean = false;
+  allowResetPassword: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,6 +47,10 @@ export class LoginComponent implements OnInit {
     this.resetPasswordForm = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.isLoaded = true;
   }
 
   submit() {

@@ -4,6 +4,7 @@
 
             <div class="col-12 offset-0 col-lg-6 offset-lg-3">
                 <div 
+                    [@loadAnimation]="isLoaded ? 'open' : 'closed'"
                     class="card p-5 mb-5 d-flex justify-content-center" 
                     id="loginForm">
 
@@ -70,6 +71,7 @@
                             </span>
                         </button>
                         <a 
+                            *ngIf="allowResetPassword"
                             (click)="forgotPassword()"
                             title="Wachtwoord vergeten?" 
                             class="w-100 text-center pt-3 d-block">

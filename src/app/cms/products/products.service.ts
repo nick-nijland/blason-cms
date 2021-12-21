@@ -27,28 +27,9 @@ export class ProductsService {
     return this.productRef.remove(key);
   }
 
-  text() {
-    return {
-      delete: "Verwijder",
-    };
+  update(key: string, value: any): Promise<void> {
+    return this.productRef.update(key, value);
   }
 
-
-  // getAll(): AngularFireList<Faq> {
-  //   return this.faqRef;
-  // }
-
-
-  //   update(key: string, value: any): Promise<void> {
-  //     return this.faqRef.update(key, value);
-  //   }
-
-  //   delete(key: string): Promise<void> {
-  //     return this.faqRef.remove(key);
-  //   }
-
-  //   deleteAll(): Promise<void> {
-  //     return this.faqRef.remove();
-  //   }
 
 }

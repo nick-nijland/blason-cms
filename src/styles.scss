@@ -174,11 +174,6 @@ main {
 
 // products
 .products {
-    .link {
-        font-weight: bold;
-        cursor: pointer;
-        color: $primaryColor;
-    }
     .card {
         img {
             cursor: pointer;
@@ -190,6 +185,12 @@ main {
     }
 }
 
+.link {
+    font-weight: bold;
+    cursor: pointer;
+    color: $primaryColor;
+}
+
 .add-button {
     position: fixed;
     bottom: $space*2;
@@ -199,6 +200,16 @@ main {
 
 .tip {
     background: #EEEEF7;
+}
+
+.bottom-alert {
+    position: fixed;
+    z-index: 1;
+    background: white;
+    border-radius: 3px;
+    box-shadow: $cardShadow;
+    bottom: $space*2;
+    left: $space*2;
 }
 
 html, body { height: 100%; }

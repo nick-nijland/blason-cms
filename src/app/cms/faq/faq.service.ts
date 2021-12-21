@@ -8,11 +8,13 @@ import { Faq } from './faq.interface';
 })
 export class FaqService {
 
+
   private dbPath = '/faq';
   faq: Faq;
   faqRef: AngularFireList<Faq>;
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(
+    private db: AngularFireDatabase) {
     this.faqRef = db.list(this.dbPath);
   }
 
